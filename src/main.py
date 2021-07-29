@@ -71,7 +71,7 @@ print(f"Matriz com as features de entrada: \n{X}\n")
   # max_depth -> Altura máxima da arvore
 
 # Learn the decision tree
-clf = tree.DecisionTreeClassifier(criterion = "entropy", max_depth = 5)
+clf = DecisionTreeClassifier(criterion = "entropy", max_depth = 5)
 
 # Treina o algoritmo -> Fazer a logica de divisão
 model = clf.fit(X, Y)
@@ -87,7 +87,7 @@ features_names = ['battery_power', 'blue', 'clock_speed','dual_sim','fc']
 print(f"Features names: {features_names}")
 
 # Nomes das classes - Rótulos
-classes_names = model.classes_
+classes_names = ['low_cost', 'medium_cost', 'high_cost', 'very_high_cost']
 print(f"Classes names - Rotulos: {classes_names}")
 
 # MONTAR A IMAGEM DA ÁRVORE
@@ -95,6 +95,7 @@ dot_data = StringIO()
 
 #dot_data = tree.export_graphviz(my_tree_one, out_file=None, feature_names=featureNames)
 export_graphviz(model, out_file=dot_data, filled=True, feature_names=features_names, class_names=classes_names, rounded=True, special_characters=True)
+
 graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
 Image(graph.create_png())
 graph.write_png("arvore.png")
