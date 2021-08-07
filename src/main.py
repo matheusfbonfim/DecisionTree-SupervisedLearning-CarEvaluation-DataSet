@@ -2,25 +2,18 @@
 ## BIBLIOTECAS IMPORTADAS
 
 # Bibliotecas básicas
-import numpy as np
 import pandas as pd
-import itertools
+import os
+import numpy as np
 
 # Gráficos e tabelas
-import matplotlib.pyplot as plt
 import pydotplus
-import matplotlib.image as mpimg
-from IPython.display import Image
 
 # Algoritmo para treinar o modelo de arvore de decisao
-from sklearn.tree import DecisionTreeClassifier, export_graphviz
-
-# Métricas para avaliação de modelo
-from sklearn import preprocessing, tree
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn import tree
 from sklearn.model_selection import train_test_split
-from six import StringIO
 
+# -----------------------------------------------------------
 # -----------------------------------------------------------
 
 ###########################
@@ -30,7 +23,9 @@ from six import StringIO
 database = pd.read_csv("../database/data_folder/car.data", names = ["buying", "maintenance", "doors", "persons", "lug_boot", "safety", "classification"])
 
 # Verificando as 5 primeiras linhas do database
-print("\tPRÉ VISUALIZAÇÃO DA BASE DE DADOS\n")
+print("="*60)
+print("\t\t\tPRÉ VISUALIZAÇÃO DA BASE DE DADOS")
+print("="*60)
 print(database.head(),'\n')
 
 # Número de linhas e colunas
@@ -50,39 +45,45 @@ print(f"Total de registros com a classificação de acc: {database[database['cla
 print(f"Total de registros com a classificação de good: {database[database['classification'] == 'good'].shape[0]}")
 print(f"Total de registros com a classificação de v-good: {database[database['classification'] == 'vgood'].shape[0]}\n")
 
-
 ############################
 ## ALTERANDO OS RÓTULOS
 
 # -------------------
 # Os rótulos da classificação são strings, assim é necessário converter em um formato inteiro para que o algoritmo entenda
-    # 1 para unacc, 2 para acc, 3 para good, 4 para vgood
 
-database.classification[database["classification"] == 'unacc'] = 1
-database.classification[database["classification"] == 'acc'] = 2
-database.classification[database["classification"] == 'good'] = 3
-database.classification[database["classification"] == 'vgood'] = 4
+    # 0 para unacc, 1 para acc, 2 para vgood,3 para good,
+database['classification'], names_classification = pd.factorize(database['classification'])
+
+    # Codigos inteiros equivalentes aos tipos de classificações
+print(names_classification) # Classes de saída
+print(database['classification'].unique(),'\n')
 
 # -------------------
 # Convertendo as features de entrada de strings para um formato numérico para identificação pelo algoritmo
 
-inputs_features = list(database.columns)    # Features de entrada e rotulo de saida
-inputs_features.remove("classification")    # Removendo rotulo de saída
+    # buying -> 0: v-high, 1: high, 2: med, 3: low
+database['buying'], _ = pd.factorize(database['buying'])
 
-print(f"Features de entrada: {inputs_features}")
+    # maintenance -> 0: v-high, 1: high, 2: med, 3: low
+database['maintenance'], _ = pd.factorize(database['maintenance'])
 
-# Dicionario para armazenar os uniques de cada feature
-uniques_features = {"buying": [],"maintenance": [], "doors": [], "persons": [], "lug_boot": [], "safety": []}
+    # doors -> 0: 2, 1: 3, 2: 4, 3: 5 - more
+database['doors'], _ = pd.factorize(database['doors'])
 
-for i in inputs_features:
-    # Utilizando factorize -> Variaveis categoricas para variaveis indicadoras
-    database[i],  uniques_features[i] = pd.factorize(database[i])
+    # persons ->  0: 2, 1: 4, 2: more
+database['persons'], _ = pd.factorize(database['persons'])
 
-print(f"Uniques: \n {uniques_features}\n")
+    # lug_boot -> 0: small, 1: med, 2: big
+database['lug_boot'], _ = pd.factorize(database['lug_boot'])
+
+    # safety ->  0: low, 1: med, 2: high
+database['safety'], _ = pd.factorize(database['safety'])
 
 # -------------------
 # Verificando as 5 primeiras linhas do database
-print("\tPRÉ VISUALIZAÇÃO DA BASE DE DADOS COM RÓTULOS ATUALIZADOS\n")
+print("="*60)
+print("\tPRÉ VISUALIZAÇÃO DA BASE DE DADOS COM RÓTULOS ATUALIZADOS")
+print("="*60)
 print(database.head(),'\n')
 
 
@@ -93,24 +94,23 @@ print(database.head(),'\n')
 # Além disso, separar as features de entrada e as labels
 
 # -------------------
-# Definindo rótulos de saída como classification
-    # Cada classificação é o alvo que queremos prever a partir dos valores das outras colunas (entradas)
-Y = database['classification'].values # Usa values para converter o dataframe do pandas para o array numpy
-print(f"Rotulos de saida: {Y}\n")
-
-# -------------------
 # Definindo a matriz de features
     # Escolhemos um conjunto de recursos manualmente e os convertemos
-X = database[["buying", "maintenance", "doors", "persons", "lug_boot", "safety"]].values
-print(f"Matriz com as features de entrada: \n{X}\n")
+columns = ["buying", "maintenance", "doors", "persons", "lug_boot", "safety"]
+X = database[list(columns)].values
+
+# -------------------
+# Definindo rótulos de saída como classification
+    # Cada classificação é o alvo que queremos prever a partir dos valores das outras colunas (entradas)
+Y = database["classification"].values
 
 
 ############################
 ## DIVIDIR O DATASET ENTRE TREINO E TESTE
 
-    # Dataset de treino - 75% dos dados
-    # Dataset de teste - 25% dos dados
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, random_state = 3)
+    # Dataset de treino - 70% dos dados
+    # Dataset de teste - 30% dos dados
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 3)
 
 
 ############################
@@ -119,36 +119,26 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, rand
 # Criar um algoritmo que será do tipo de arvore de decisão
   # Criando o algoritmo de arvore de decisão
   # DecisionTreeClassifier - Classificação de arvore de decisão
-  # Criterios -> Existem outras estratpegias mas usamos a entropia
+  # Criterios -> Existem outras estrategias mas usamos a entropia
   # max_depth -> Altura máxima da arvore
 
-# # Learn the decision tree
-clf = DecisionTreeClassifier(criterion = "entropy", max_depth = 5)
+# Learn the decision tree
+clf = tree.DecisionTreeClassifier(criterion="entropy", max_depth=3)
 
 # Treina o algoritmo -> Fazer a logica de divisão
 model = clf.fit(X_train, Y_train)
 
-# ###########################
-# # ENTENDENDO O RESULTADO DA ÁRVORE
-#
-# # Feature mais importante
-# print(f"Feature mais importante: {model.feature_importances_}")
-#
-# # Labels para features
-# features_names = ['battery_power', 'blue', 'clock_speed','dual_sim','fc']
-# print(f"Features names: {features_names}")
-#
-# # Nomes das classes - Rótulos
-# classes_names = ['low_cost', 'medium_cost', 'high_cost', 'very_high_cost']
-# print(f"Classes names - Rotulos: {classes_names}")
-#
-# # MONTAR A IMAGEM DA ÁRVORE
-# dot_data = StringIO()
-#
-# #dot_data = tree.export_graphviz(my_tree_one, out_file=None, feature_names=featureNames)
-# export_graphviz(model, out_file=dot_data, filled=True, feature_names=features_names, class_names=classes_names, rounded=True, special_characters=True)
-#
-# graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
-# Image(graph.create_png())
-# graph.write_png("arvore.png")
-# Image('arvore.png')
+
+###########################
+# ENTENDENDO O RESULTADO DA ÁRVORE
+
+# Montando a imagem da arvore
+
+# Export as png or pdf
+dot_data = tree.export_graphviz(model, out_file=None, feature_names=columns,
+                                class_names=names_classification, filled=True,
+                                rounded=True, special_characters=True)
+
+graph = pydotplus.graph_from_dot_data(dot_data)
+
+graph.write_png('Tree_Decision_Car_Acceptability.png')
