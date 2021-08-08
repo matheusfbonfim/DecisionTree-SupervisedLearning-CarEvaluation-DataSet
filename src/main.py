@@ -26,7 +26,7 @@ database = pd.read_csv("../database/data_folder/car.data", names = ["buying", "m
 
 # Verificando as 5 primeiras linhas do database
 print("="*60)
-print("\t\t\tPRÉ VISUALIZAÇÃO DA BASE DE DADOS")
+print("\t\t\tPRE VISUALIZACAO DA BASE DE DADOS")
 print("="*60)
 print(database.head(),'\n')
 
@@ -42,10 +42,10 @@ print(f"Numero de linhas: {num_linhas} e colunas: {num_colunas}\n")
 # classification - a variável-alvo com valor de:
     # unacc (inaceitavel) / acc (aceitavel)
     # good (bom) / vgood (muito bom).
-print(f"Total de registros com a classificação de unacc: {database[database['classification'] == 'unacc'].shape[0]}")
-print(f"Total de registros com a classificação de acc: {database[database['classification'] == 'acc'].shape[0]}")
-print(f"Total de registros com a classificação de good: {database[database['classification'] == 'good'].shape[0]}")
-print(f"Total de registros com a classificação de v-good: {database[database['classification'] == 'vgood'].shape[0]}\n")
+print(f"Total de registros com a classificacao de unacc: {database[database['classification'] == 'unacc'].shape[0]}")
+print(f"Total de registros com a classificacao de acc: {database[database['classification'] == 'acc'].shape[0]}")
+print(f"Total de registros com a classificacao de good: {database[database['classification'] == 'good'].shape[0]}")
+print(f"Total de registros com a classificacao de v-good: {database[database['classification'] == 'vgood'].shape[0]}\n")
 
 
 ############################
@@ -85,7 +85,7 @@ database['safety'], _ = pd.factorize(database['safety'])
 # -------------------
 # Verificando as 5 primeiras linhas do database
 print("="*60)
-print("\tPRÉ VISUALIZAÇÃO DA BASE DE DADOS COM RÓTULOS ATUALIZADOS")
+print("\tPRE VISUALIZACAO DA BASE DE DADOS COM ROTULOS ATUALIZADOS")
 print("="*60)
 print(database.head(),'\n')
 
@@ -132,6 +132,8 @@ clf = tree.DecisionTreeClassifier(criterion="entropy", max_depth=5)
 model = clf.fit(X_train, Y_train)
 
 
+os.environ["PATH"] += os.pathsep + 'C:\\Users\mathe\\anaconda3\\pkgs\\graphviz-2.38-hfd603c8_2\\Library\\bin\\graphviz'
+
 ###########################
 # RESULTADO DA ÁRVORE
 
@@ -155,4 +157,4 @@ Y_predic = model.predict(X_test)
 # Avaliando o modelo com a acuracia
     # Qual porcentagem de assertividade
 precisao = accuracy_score(Y_test, Y_predic)
-print(f"Acuracia da árvore: {precisao}")
+print(f"Acuracia da arvore: {precisao}")
