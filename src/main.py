@@ -123,14 +123,14 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, rando
   # max_depth -> Altura máxima da arvore
 
 # Learn the decision tree
-clf = tree.DecisionTreeClassifier(criterion="entropy", max_depth=3)
+clf = tree.DecisionTreeClassifier(criterion="entropy", max_depth=5)
 
 # Treina o algoritmo -> Fazer a logica de divisão
 model = clf.fit(X_train, Y_train)
 
 
 ###########################
-# ENTENDENDO O RESULTADO DA ÁRVORE
+# RESULTADO DA ÁRVORE
 
 # Montando a imagem da arvore
 
@@ -142,3 +142,17 @@ dot_data = tree.export_graphviz(model, out_file=None, feature_names=columns,
 graph = pydotplus.graph_from_dot_data(dot_data)
 
 graph.write_png('Tree_Decision_Car_Acceptability.png')
+
+
+# # Predict using our model
+# studytime = 0
+# sex = 0
+# pstatus = 0
+# internet = 0
+# absences = 50
+#
+# # Predict a single decision, survive or not?
+# print(clf.predict([[studytime, sex, pstatus, internet, absences]]))
+#
+# # Predict probability of decision per class
+# print(clf.predict_proba([[studytime, sex, pstatus, internet, absences]])*100)
