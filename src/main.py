@@ -12,6 +12,8 @@ import pydotplus
 # Algoritmo para treinar o modelo de arvore de decisao
 from sklearn import tree
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report
+
 
 # -----------------------------------------------------------
 # -----------------------------------------------------------
@@ -44,6 +46,7 @@ print(f"Total de registros com a classificação de unacc: {database[database['c
 print(f"Total de registros com a classificação de acc: {database[database['classification'] == 'acc'].shape[0]}")
 print(f"Total de registros com a classificação de good: {database[database['classification'] == 'good'].shape[0]}")
 print(f"Total de registros com a classificação de v-good: {database[database['classification'] == 'vgood'].shape[0]}\n")
+
 
 ############################
 ## ALTERANDO OS RÓTULOS
@@ -144,15 +147,12 @@ graph = pydotplus.graph_from_dot_data(dot_data)
 graph.write_png('Tree_Decision_Car_Acceptability.png')
 
 
-# # Predict using our model
-# studytime = 0
-# sex = 0
-# pstatus = 0
-# internet = 0
-# absences = 50
-#
-# # Predict a single decision, survive or not?
-# print(clf.predict([[studytime, sex, pstatus, internet, absences]]))
-#
-# # Predict probability of decision per class
-# print(clf.predict_proba([[studytime, sex, pstatus, internet, absences]])*100)
+############################
+## TESTANDO O MODELO
+
+Y_predic = model.predict(X_test)
+
+# Avaliando o modelo com a acuracia
+    # Qual porcentagem de assertividade
+precisao = accuracy_score(Y_test, Y_predic)
+print(f"Acuracia da árvore: {precisao}")
