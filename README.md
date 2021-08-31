@@ -1,18 +1,10 @@
-# DecisionTree-SupervisedLearning-AppOnDatabase
- Dado uma base de dados, aplica-se um método de aprendizado supervisionado sobre esta base, especificamente a árvore de decisão.
-
-
-<!-- CAPA -->
-
-<!-- 
-<h1 align="center">
-    <img alt="NextLevelWeek" title="#NextLevelWeek" src=".github/capa_happy.png" width="1000px" />
-</h1>
--->
-
-
 <h2 align="center">
         
+<a href="https://drive.google.com/file/d/1lTGX7qvQADMDAtfkQ9LmwxCcLONXS2Ca/view?usp=sharing">
+         <img src="https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white" />
+</a>
+ 
+ 
 <a href="">
          <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
 </a>
@@ -23,7 +15,7 @@
 
 
 <h1 align="center">
-    <img alt="Happy" title="Happy" src=".github/Home.svg" />
+    <img alt="LOGO" title="LOGO" src=".github/LOGO.png" width = "35%" />
 </h1>
 
 <h1 align="center">
@@ -33,53 +25,45 @@
 </h2>
 </h1>
 
-
-
 <!--INDEX-->
 <p align="center">
   <a href="#-sobre-o-projeto">Sobre o projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#screenshots">Screenshots</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-Desenvolvimento">Desenvolvimento</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-árvore-de-decisão">Árvore de decisão</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#rocket-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-tools">Tools</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-como-executar-o-projeto">Como executar o projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-license">License</a>
 </p>
 
-<h1 align="center">
-  <img alt="Happy" src=".github/happy.png" width="100%">
-</h1>
 
-<!-- Tópicos -->
 
 ## 💻 Sobre o projeto
-- Projeto desenvolvido durante o **[Next Level Week](https://nextlevelweek.com/)**, realizada pela **[@Rocketseat](https://github.com/Rocketseat)**.
-- Happy é um projeto desenvolvido com inspiração no dia das crianças. O objetivo é conectar as pessoas a orfanatos, permitindo tornar o dia das crianças mais especial 💜.
 
-## 📸 Screenshots
+- A proposta do presente trabalho tem como objetivo demonstrar a aplicação de um metódo de aprendizado supervisionado com a técnica de  ́arvore de decisão, utilizando a
+base de dados Car Evaluation, no qual contém informações de atributos de um carro e contribui para o prognóstico da qualidade de um veículo.
 
 
-## 🔖 Layout
+## 🔖 Desenvolvimento
 
-Você pode visualizar o layout do projeto através do link abaixo:
+No link abaixo do **Google Drive** é possível baixar um relatório no qual foi desenvolvido com objetivo de descrever sobre o desenvolvimento da implementacão da árvore de decisão sobre esta base de dados, assim como demonstrar os resultados e discussões obtidos e por fim uma conclusão:
 
-- [Layout Web](https://www.figma.com/file/CuWVxXs4gKob3mcwqND4PI/Layout---Happy-Web)
+[<img src="https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white" alt="License" />](https://drive.google.com/file/d/1lTGX7qvQADMDAtfkQ9LmwxCcLONXS2Ca/view?usp=sharing)
+
+## 🌲 Árvore de decisão
+
+<h1 align="center">
+    <img alt="Tree" title="Tree" src=".github/Tree_Decision_Car_Acceptability.png" width = "70%" />
+</h1>
+
 
 ## :rocket: Tecnologias
 
 This project was developed with the following technologies:
 
-Front-end:
-- [HTML]()
-- [CSS]()
-- [JavaScript]()
-- [Leaflet](https://leafletjs.com/)
-
-Back-end
-- [Node.js](https://nodejs.org/en/)
-- [Express](https://expressjs.com/pt-br/)
-- [Handlebars](https://handlebarsjs.com/)
-- [SQLite](https://www.sqlite.org/index.html)
-<!-- - [Expo][expo] -->
+- [scikit-learn](https://scikit-learn.org/stable/)
+- [pandas](https://pandas.pydata.org/)
+- [numpy](https://numpy.org/)
 
 ## ⛏ Tools
 - [Visual Studio Code](https://code.visualstudio.com/)
@@ -93,17 +77,9 @@ Back-end
    - Enter in directory:
    $ cd happy
 
-   - For install dependencies:
-   $ npm install
-
    - Execute application:
-   $ npm start
-
-   - Open your browser in:
-   http://localhost:5500/
+   $ python main.py
    ```
-
-💡O Front End precisa que o Back End esteja sendo executado para funcionar.
 
 ## :memo: License
 
@@ -115,10 +91,6 @@ Gostou? Deixe uma estrelinha para ajudar o projeto ⭐
 <h3 align="center">
 Feito com ❤️ por <a href="https://www.linkedin.com/in/matheusfbonfim/">Matheus Bonfim</a>
 <br><br>
-<a href="https://rocketseat.com.br">
-  <img alt="Made by Rocketseat" src="https://img.shields.io/badge/made%20by-Rocketseat-%237519C1">
-</a>
-</h3>
 </h3>
 
 
